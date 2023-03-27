@@ -25,10 +25,16 @@
     <div class="section-content section-content-p30">
         <div class="container-fluid">
             <div class="row row-cols-2"> 
+                <!-- loop into the collection of products -->
                     <div *ngFor="let tempProduct of products">
                         <div class="product-box">
-                            <img src="{{tempProduct.imageUrl }}" alt="" class="img-responsive">
-                            <h1>{{tempProduct.name}}</h1>
+                            <a routerLink="/products/{{tempProduct.id}}">
+                                <img src="{{tempProduct.imageUrl }}" class="img-responsive">
+                            </a>
+                            <a routerLink="/products/{{tempProduct.id}}">
+                                <h1>{{tempProduct.name}}</h1>
+                            </a>
+                            
     
                             <div class="price">R{{tempProduct.unitPrice}}</div>
                             <a href="#" class="primary-btn">Add to cart</a>
@@ -36,7 +42,11 @@
                     
                 </div>
                 <!-- loop over the list of products -->
-                
+                <!-- If after searching into the products list and is empty then display a message to the user -->
+                <br><br><br><br>
+                <div *ngIf="products?.length == 0" class="alert alert-warning col-md-12" role="alert">
+                   <h2 style="background-color: orange;">No products Found. Try another product name </h2> 
+                </div>
             </div>
         </div>
     </div>
