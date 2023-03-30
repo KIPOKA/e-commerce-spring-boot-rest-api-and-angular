@@ -9,6 +9,7 @@ import { ProductService } from 'src/app/service/product.service';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit{
+
   //initialiase
   products: Product[]=[];
   currentCategoryId: number=1;
@@ -16,8 +17,11 @@ export class ProductListComponent implements OnInit{
   searchMode: boolean = false;
   //add a new property for pagination
    thePageNumber: number = 1;
-   thePageSize:number = 10;
+   thePageSize:number = 5;
    theTotalElements =0;
+
+
+   previousKeyword:string="";
   constructor(private productService: ProductService, private route:ActivatedRoute){}
   ngOnInit(): void { 
     this.route.paramMap.subscribe(()=>{
@@ -25,6 +29,9 @@ export class ProductListComponent implements OnInit{
     });
     
   }
+  //If we have a different keyword than previous
+  //then set the page number to 1
+  
   listProducts() {
     this.searchMode = this.route.snapshot.paramMap.has('keyword');
     if(this.searchMode){
@@ -37,13 +44,24 @@ export class ProductListComponent implements OnInit{
   handleSearchProduct() {
     //search from a list of products
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
+    if (this.previousKeyword !=theKeyword) 
+    {
+     this.thePageNumber =1; 
+    }
+    this.previousKeyword = theKeyword;
+    //display in case of deburging
+    console.log(`keyword=${theKeyword}, thePageKeyword=${this.thePageNumber}`);
     //seach products from using the given keyword from the user
-    this.productService.seachPrdoucts(theKeyword).subscribe(
-      data =>{
-        this.products = data;
-      }
-    )
+   
+    this.productService.searchProductPaginate(this.thePageNumber -1, this.thePageSize, theKeyword).subscribe(
+     this.processResult());
+   
   }
+  updatePageSize(pageSize: string) {
+    this.thePageSize = +pageSize;
+    this.thePageNumber=1;
+    this.listProducts();
+    }
   handleListProducts(){
     //check if the id parameter is available
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
@@ -59,19 +77,24 @@ export class ProductListComponent implements OnInit{
    if(this.previousCategoryId != this.currentCategoryId){
     this.thePageNumber=1;
 
+
    }
    this.previousCategoryId = this.currentCategoryId;
    console.log(`currentCategoryId=${this.currentCategoryId}, previousCategoryId=${this.previousCategoryId} `);
     //Now we need to get the product category for the given id of the same category
     this.productService.getProductListPaginate(this.thePageNumber -1, this.thePageSize, this.currentCategoryId).subscribe(
-      data =>{
-        //collecting data frim the product services 
-        this.products = data._embedded.products;
-        this.thePageNumber = data.page.number + 1;
-        this.thePageSize = data.page.size;
-        this.theTotalElements = data.page.totalElements;        
-      }
-    );
+      this.processResult());
+  }
+  processResult(){
+    return (data: any)=>{
+      this.products = data._embedded.products;
+      this.thePageNumber = data.page.number +1;
+      this.thePageSize = data.page.size;
+      this.theTotalElements = data.page.totalElements;
+    }
+  }
+  addToCart(theProduct:Product){
+    console.log(`Adding to cart: ${theProduct.name}, ${theProduct.unitPrice}`)
   }
 
 }

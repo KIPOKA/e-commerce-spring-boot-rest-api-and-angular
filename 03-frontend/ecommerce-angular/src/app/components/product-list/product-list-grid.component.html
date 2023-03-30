@@ -12,7 +12,7 @@
                                 <h1>{{tempProduct.name}}</h1>
                             </a> 
                             <div class="price">R{{tempProduct.unitPrice}}</div>
-                            <a href="#" class="primary-btn">Add to cart</a>
+                            <button (click)="addToCart(tempProduct)" class="btn btn-primary btn-sm">Add to cart</button>
                         </div>                    
                 </div>
                 <!-- loop over the list of products -->
@@ -32,7 +32,20 @@
                                     <ngb-pagination [(page)]="thePageNumber"
                                                     [pageSize]="thePageSize"
                                                     [collectionSize]="theTotalElements"
+                                                    [maxSize]="5"
+                                                    [boundaryLinks]="true"
                                                     (pageChange)="listProducts()"></ngb-pagination>
+                            </div>
+                            <div class="col-md-3 mt-2" style="text-align: right;">
+                            <span class="mr-2">Page Size</span>
+                            <select #myPageSelect (change)="updatePageSize(myPageSelect.value)">
+                                <option value="">2</option>
+                                <option selected="true" value="">5</option>
+                                <option  >10</option>
+                                <option >20</option>
+                                <option >50</option>
+                            </select>
+                        
                             </div>
                         </div>
                     </div>

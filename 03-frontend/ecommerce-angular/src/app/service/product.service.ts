@@ -47,6 +47,12 @@ export class ProductService {
     const searchUrl=`${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}` + `&page=${thePage}&size=${pageSize}`;
     return this.httpClient.get<GetResponseProducts>(searchUrl);
   }
+  //this method will get a parameter and using searching by keyword
+  searchProductPaginate(thePage:number, pageSize:number,
+    theKeyword:string): Observable<GetResponseProducts>{
+    const searchUrl=`${this.baseUrl}/search/findByNameContaining?name=${theKeyword}` + `&page=${thePage}&size=${pageSize}`;
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
+  }
 
 }
 
