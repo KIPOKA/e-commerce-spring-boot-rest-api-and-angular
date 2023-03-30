@@ -1,45 +1,19 @@
-<!-- <table class="table">
-    <thead class="table-dark">
-        <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Units in stock</th>
-            
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let tempProduct of products">
-            <td >
-                <img src="{{tempProduct.imageUrl}}" alt="" height="50">
-            </td>
-            <td class="align-middle">{{tempProduct.name}}</td>
-            <td class="align-middle">{{tempProduct.unitPrice | currency:'USD'}}</td>
-            <td class="align-middle">{{tempProduct.unitsInStock}}</td>
-        </tr>
-    </tbody>
-
-</table>
- -->
  <div class="main-content">
     <div class="section-content section-content-p30">
         <div class="container-fluid">
             <div class="row row-cols-2"> 
                 <!-- loop into the collection of products -->
-                    <div *ngFor="let tempProduct of products">
+                    <div *ngFor="let tempProduct of products" class="col-md-3">
                         <div class="product-box">
                             <a routerLink="/products/{{tempProduct.id}}">
-                                <img src="{{tempProduct.imageUrl }}" class="img-responsive">
+                                <img src="{{tempProduct.imageUrl}}" class="img-responsive" alt="">
                             </a>
                             <a routerLink="/products/{{tempProduct.id}}">
                                 <h1>{{tempProduct.name}}</h1>
-                            </a>
-                            
-    
+                            </a> 
                             <div class="price">R{{tempProduct.unitPrice}}</div>
                             <a href="#" class="primary-btn">Add to cart</a>
-                        </div>
-                    
+                        </div>                    
                 </div>
                 <!-- loop over the list of products -->
                 <!-- If after searching into the products list and is empty then display a message to the user -->
@@ -48,7 +22,22 @@
                    <h2 style="background-color: orange;">No products Found. Try another product name </h2> 
                 </div>
             </div>
+            <!-- Begin of the footer  -->
+            <div class="footer-pagination">
+                <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-9" style="padding-left: 30%;">
+                                    <ngb-pagination [(page)]="thePageNumber"
+                                                    [pageSize]="thePageSize"
+                                                    [collectionSize]="theTotalElements"
+                                                    (pageChange)="listProducts()"></ngb-pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
  </div>

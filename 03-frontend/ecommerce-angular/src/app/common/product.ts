@@ -10,8 +10,6 @@ export class Product {
         public active:boolean,
         public dateCreated:Date,
         public lastUpdated:Date
-    ){
-
-    }
+    ){}
 }
  
