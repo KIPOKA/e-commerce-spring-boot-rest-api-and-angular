@@ -1,18 +1,20 @@
  <div class="main-content">
     <div class="section-content section-content-p30">
         <div class="container-fluid">
-            <div class="row row-cols-2"> 
+            <div class="row row-cols-2 " > 
                 <!-- loop into the collection of products -->
-                    <div *ngFor="let tempProduct of products" class="col-md-3">
-                        <div class="product-box">
-                            <a routerLink="/products/{{tempProduct.id}}">
+                    <div *ngFor="let tempProduct of products" class="col-md-3" >
+                        <div class="product-box" style="background-color: rgb(213, 219, 218); align-items: center; ">
+                            <a routerLink="/products/{{tempProduct.id}}" style="margin-left: 10%;">
                                 <img src="{{tempProduct.imageUrl}}" class="img-responsive" alt="">
                             </a>
-                            <a routerLink="/products/{{tempProduct.id}}">
+                            <br>
+                            <a routerLink="/products/{{tempProduct.id}}" style="margin-left: 10px;">
                                 <h1>{{tempProduct.name}}</h1>
                             </a> 
-                            <div class="price">R{{tempProduct.unitPrice}}</div>
-                            <button (click)="addToCart(tempProduct)" class="btn btn-primary btn-sm">Add to cart</button>
+                            <div class="price" style="margin-left: 10px;">R{{tempProduct.unitPrice}}</div>
+                            <button (click)="addToCart(tempProduct)" class="btn btn-primary btn-md" style="margin-left: 10px;">Add to cart</button>
+                            <br><br>
                         </div>                    
                 </div>
                 <!-- loop over the list of products -->
@@ -39,10 +41,10 @@
                             <div class="col-md-3 mt-2" style="text-align: right;">
                             <span class="mr-2">Page Size</span>
                             <select #myPageSelect (change)="updatePageSize(myPageSelect.value)">
-                                <option value="">2</option>
-                                <option selected="true" value="">5</option>
+                                
+                                <option >5</option>
                                 <option  >10</option>
-                                <option >20</option>
+                                <option selected="true" value="">20</option>
                                 <option >50</option>
                             </select>
                         
